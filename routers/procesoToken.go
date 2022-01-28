@@ -22,11 +22,13 @@ func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
 	claims := &models.Claim{}
 
 	splitToken := strings.Split(tk, "Bearer")
-	if len(splitToken) != 2 {
+	/*if len(splitToken) != 2 {
 		return claims, false, string(""), errors.New("formato de token invalido")
 	}
 
-	tk = strings.TrimSpace(splitToken[1])
+	tk = strings.TrimSpace(splitToken[1])*/
+
+	tk = strings.TrimSpace(splitToken[0])
 
 	tkn, err := jwt.ParseWithClaims(tk, claims, func(token *jwt.Token) (interface{}, error) {
 		return miClave, nil
