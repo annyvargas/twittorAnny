@@ -8,13 +8,8 @@ import (
 	"github.com/annyvargas/twittorAnny/bd"
 )
 
-func LeoTweets(w http.ResponseWriter, r *http.Request) {
-	ID := r.URL.Query().Get("id")
-	if len(ID) < 1 {
-		http.Error(w, "debe enviar el parametro id", http.StatusBadRequest)
-		return
-	}
-
+//LeoTweetsSeguidores
+func LeoTweetsSeguidores(w http.ResponseWriter, r *http.Request) {
 	if len(r.URL.Query().Get("pagina")) < 1 {
 		http.Error(w, "debe enviar el parametro pagina", http.StatusBadRequest)
 		return
@@ -22,19 +17,17 @@ func LeoTweets(w http.ResponseWriter, r *http.Request) {
 
 	pagina, err := strconv.Atoi(r.URL.Query().Get("pagina"))
 	if err != nil {
-		http.Error(w, "debe enviar el parametro pagina con un valor mayor a 0", http.StatusBadRequest)
+		http.Error(w, "debe enviar el parametro pagina como entero mayor a 0", http.StatusBadRequest)
 		return
 	}
 
-	pag := int64(pagina)
-	respuesta, correcto := bd.LeoTweets(ID, pag)
+	respuesta, correcto := bd.LeoTweetsSeguidores(IDUsuario, pagina)
 	if !correcto {
 		http.Error(w, "error al leer los tweets", http.StatusBadRequest)
 		return
 	}
 
-	w.Header().Set("Content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(respuesta)
-
 }

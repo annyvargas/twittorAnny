@@ -27,7 +27,7 @@ func ModificarPerfil(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if status == false {
+	if !status {
 		http.Error(w, "no se ha logrado modificar el registro del usuario"+err.Error(), 400)
 		return
 

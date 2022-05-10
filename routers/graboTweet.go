@@ -12,7 +12,7 @@ import (
 /*GraboTweet permite grabar el tweet en la base de datos */
 func GraboTweet(w http.ResponseWriter, r *http.Request) {
 	var mensaje models.Tweet
-	err := json.NewDecoder(r.Body).Decode(&mensaje)
+	json.NewDecoder(r.Body).Decode(&mensaje)
 
 	registro := models.GraboTweet{
 		UserId:  IDUsuario,
@@ -25,7 +25,7 @@ func GraboTweet(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "ocurrio un error al intentar insertar el registro, intente nuevamente "+err.Error(), 400)
 		return
 	}
-	if status == false {
+	if !status {
 		http.Error(w, "no se ha logrado insertar el tweet ", 400)
 		return
 	}
